@@ -1,0 +1,20 @@
+{
+  "name": "group-dependabot-prs",
+  "version": "1.0.0",
+  "description": "Simplified version of [combine-prs-workflow](https://github.com/hrvey/combine-prs-workflow) and with an action",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Santos-Luis/group-dependabot-prs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Santos-Luis/group-dependabot-prs/issues"
+  },
+  "homepage": "https://github.com/Santos-Luis/group-dependabot-prs#readme"
+}
