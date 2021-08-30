@@ -83,4 +83,4 @@ const createPR = async ({
     });
 };
 
-await main();
+main();
