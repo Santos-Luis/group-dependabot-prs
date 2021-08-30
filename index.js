@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const { context, getOctokit } = require('@actions/github');
-const execa = require("execa");
+const execa = require('execa');
 
 const main = async () => {
     const githubToken = core.getInput('githubToken', { required: true });

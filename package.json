@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Santos-Luis/group-dependabot-prs/issues"
   },
-  "homepage": "https://github.com/Santos-Luis/group-dependabot-prs#readme"
+  "homepage": "https://github.com/Santos-Luis/group-dependabot-prs#readme",
+  "dependencies": {
+    "@actions/core": "^1.5.0",
+    "@actions/github": "^5.0.0",
+    "execa": "^5.1.1"
+  }
 }
