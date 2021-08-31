@@ -24,7 +24,7 @@ const main = async () => {
 
         console.log('Pull for branch: ' + branch);
 
-        if (branch.startsWith(combineBranchName)) {
+        if (branch.startsWith('dependabot')) {
             console.log('Branch matched: ' + branch);
             console.log('Adding branch to array: ' + branch);
             
@@ -44,7 +44,7 @@ const main = async () => {
 
     await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
-    await createPR({ prBody: prs.join('\n') });
+    await createPR({ baseBranch, combineBranchName, prBody: prs.join('\n') });
 };
 
 const setupRepository = async ({
