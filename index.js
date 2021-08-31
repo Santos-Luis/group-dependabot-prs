@@ -15,7 +15,7 @@ const main = async () => {
         repo: context.repo.repo
     });
 
-    const branches = [];
+    const branchesToCombine = [];
     const prs = [];
 
     for (const pull of pulls) {
@@ -27,18 +27,18 @@ const main = async () => {
             console.log('Branch matched: ' + branch);
             console.log('Adding branch to array: ' + branch);
             
-            branches.push(branch);
+            branchesToCombine.push(branch);
             prs.push('#' + pull['number'] + ' ' + pull['title']);
         }
     }
 
-    if (branches.length === 0) {
+    if (branchesToCombine.length === 0) {
         core.setFailed('No PRs/branches matched criteria');
 
         return;
     }
 
-    await setupRepository({ baseBranch, combineBranchName, branches });
+    await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
     const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
 
