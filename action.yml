@@ -9,6 +9,10 @@ inputs:
     description: 'Title of the pull request to combine PRs into'
     required: true
     default: 'combined-denpendabot-prs'
+  baseBranch:
+    description: 'Branch to PR into'
+    required: true
+    default: 'master'
   githubToken:
     description: 'The GitHub token used to create an authenticated client'
     default: ${{ github.token }}

@@ -57,7 +57,7 @@ const setupRepository = async ({
 
     await execa('git', ['branch', combineBranchName, baseBranch]);
     await execa('git', ['checkout', combineBranchName]);
-    await execa('git', ['pull', 'origin', branchesToCombine, '--no-edit']);
+    // await execa('git', ['pull', 'origin', branchesToCombine, '--no-edit']);
     await execa('git', ['push', 'origin', combineBranchName]);
 };
 
