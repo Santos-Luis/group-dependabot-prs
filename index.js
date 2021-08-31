@@ -39,11 +39,23 @@ const main = async () => {
     }
 
     const branchesToCombine = branches.join(' ');
-    const prBody = prs.join('\n');
 
     await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
-    await createPR({ baseBranch, combineBranchName, prBody });
+    const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
+
+    const title = core.getInput('combinePullRequestTitle', {
+        required: true
+    });
+
+    await github.pulls.create({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        title,
+        head: combineBranchName,
+        base: baseBranch,
+        body,
+    });
 };
 
 const setupRepository = async ({
@@ -59,27 +71,6 @@ const setupRepository = async ({
     await execa('git', ['checkout', combineBranchName]);
     // await execa('git', ['pull', 'origin', branchesToCombine, '--no-edit']);
     await execa('git', ['push', 'origin', combineBranchName]);
-};
-
-const createPR = async ({
-    baseBranch,
-    combineBranchName,
-    prBody,
-}) => {
-    const body = 'This PR was created by the Combine PRs action by combining the following PRs:\n' + prBody;
-
-    const title = core.getInput('combinePullRequestTitle', {
-        required: true
-    });
-
-    await github.pulls.create({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        title,
-        head: combineBranchName,
-        base: baseBranch,
-        body,
-    });
 };
 
 main().catch(err => {
