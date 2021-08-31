@@ -7,7 +7,6 @@ const main = async () => {
     const combineBranchName = core.getInput('combineBranchName', {
         required: true,
     });
-    const baseBranch = core.getInput('baseBranch', { required: true });
     const github = getOctokit(githubToken);
 
     const pulls = await github.paginate('GET /repos/:owner/:repo/pulls', {
@@ -17,7 +16,7 @@ const main = async () => {
 
     const branches = [];
     const prs = [];
-    const base_branch = null;
+    let baseBranch = null;
 
     for (const pull of pulls) {
         const branch = pull['head']['ref'];
@@ -30,7 +29,7 @@ const main = async () => {
             
             branches.push(branch);
             prs.push('#' + pull['number'] + ' ' + pull['title']);
-            base_branch = pull['base']['ref'];
+            baseBranch = pull['base']['ref'];
         }
     }
 
@@ -40,11 +39,12 @@ const main = async () => {
         return;
     }
 
-    const branchesToCombine = branches.join(' ')
+    const branchesToCombine = branches.join(' ');
+    const prBody = prs.join('\n');
 
     await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
-    await createPR({ baseBranch, combineBranchName, prBody: prs.join('\n') });
+    await createPR({ baseBranch, combineBranchName, prBody });
 };
 
 const setupRepository = async ({
@@ -79,7 +79,7 @@ const createPR = async ({
         title,
         head: combineBranchName,
         base: baseBranch,
-        body: body
+        body,
     });
 };
 
