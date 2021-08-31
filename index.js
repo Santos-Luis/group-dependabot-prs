@@ -46,7 +46,7 @@ const main = async () => {
         required: true
     });
 
-    await github.pulls.create({
+    await github.rest.pulls.create({
         owner: context.repo.owner,
         repo: context.repo.repo,
         title,
