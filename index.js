@@ -3,11 +3,20 @@ const { context, getOctokit } = require('@actions/github');
 const execa = require('execa');
 
 const main = async () => {
-    const githubToken = core.getInput('githubToken', { required: true });
-    const combineBranchName = core.getInput('combineBranchName', {
+    const combineBranchNameInput = core.getInput('combineBranchName', {
         required: true,
     });
+
+    // Sweden uses a ISO like format (YYYY-mm-dd)
+    const now = new Date();
+    const combineBranchName = `${combineBranchNameInput}-${now.toLocaleDateString('sv')}`;
+
+    const githubToken = core.getInput('githubToken', { required: true });
+    const title = core.getInput('combinePullRequestTitle', {
+        required: true
+    });
     const baseBranch = core.getInput('baseBranch', { required: true });
+
     const github = getOctokit(githubToken);
 
     const pulls = await github.paginate('GET /repos/:owner/:repo/pulls', {
@@ -41,10 +50,6 @@ const main = async () => {
     await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
     const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
-
-    const title = core.getInput('combinePullRequestTitle', {
-        required: true
-    });
 
     await github.rest.pulls.create({
         owner: context.repo.owner,
