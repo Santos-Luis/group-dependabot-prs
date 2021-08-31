@@ -68,7 +68,7 @@ const createPR = async ({
 }) => {
     const body = 'This PR was created by the Combine PRs action by combining the following PRs:\n' + prBody;
 
-    const title = core.getBooleanInput('combinePullRequestTitle', {
+    const title = core.getInput('combinePullRequestTitle', {
         required: true
     });
 
