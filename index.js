@@ -38,9 +38,7 @@ const main = async () => {
         return;
     }
 
-    const branchesToCombine = branches.join(' ');
-
-    await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
+    await setupRepository({ baseBranch, combineBranchName, branches });
 
     const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
 
@@ -69,7 +67,7 @@ const setupRepository = async ({
 
     await execa('git', ['branch', combineBranchName, baseBranch]);
     await execa('git', ['checkout', combineBranchName]);
-    // await execa('git', ['pull', 'origin', branchesToCombine, '--no-edit']);
+    await execa('git', ['pull', 'origin', ...branchesToCombine, '--no-edit']);
     await execa('git', ['push', 'origin', combineBranchName]);
 };
 
