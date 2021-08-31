@@ -7,9 +7,9 @@ const main = async () => {
         required: true,
     });
 
-    // Sweden uses a ISO like format (YYYY-mm-dd)
     const now = new Date();
-    const combineBranchName = `${combineBranchNameInput}-${now.toLocaleDateString('sv')}`;
+    const ISOdate = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+    const combineBranchName = `${combineBranchNameInput}-${ISOdate}`;
 
     const githubToken = core.getInput('githubToken', { required: true });
     const title = core.getInput('combinePullRequestTitle', {
