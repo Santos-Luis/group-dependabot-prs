@@ -8,7 +8,7 @@ const main = async () => {
     });
 
     const now = new Date();
-    const ISOdate = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+    const ISOdate = `${now.getFullYear()}-${now.getUTCMonth()}-${now.getDate()}`;
     const combineBranchName = `${combineBranchNameInput}-${ISOdate}`;
 
     const githubToken = core.getInput('githubToken', { required: true });
