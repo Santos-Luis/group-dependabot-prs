@@ -19,5 +19,5 @@ inputs:
     required: true
 runs:
   using: 'node12'
-  pre: 'pre.js'
-  main: 'index.js'
+  pre: 'action/pre.js'
+  main: 'action/index.js'
