@@ -30,14 +30,13 @@ const main = async () => {
     for (const pull of pulls) {
         const branch = pull['head']['ref'];
 
-        console.log('Pull for branch: ' + branch);
+        core.info(`Pull for branch: ${branch}`);
 
         if (branch.startsWith('dependabot')) {
-            console.log('Branch matched: ' + branch);
-            console.log('Adding branch to array: ' + branch);
+            core.info(`Adding branch to array:${branch}`);
             
             branchesToCombine.push(branch);
-            prs.push('#' + pull['number'] + ' ' + pull['title']);
+            prs.push(`#${pull['number']} ${pull['title']}`);
         }
     }
 
@@ -49,9 +48,11 @@ const main = async () => {
 
     await setupRepository({ baseBranch, combineBranchName, branchesToCombine });
 
+    core.info(`Branches '${branchesToCombine.join(', ')}' merged into '${combineBranchName}'`);
+
     const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
 
-    await github.rest.pulls.create({
+    const { id } = await github.rest.pulls.create({
         owner: context.repo.owner,
         repo: context.repo.repo,
         title,
@@ -59,6 +60,8 @@ const main = async () => {
         base: baseBranch,
         body,
     });
+
+    core.info(`PR #${id} created with success`);
 };
 
 const setupRepository = async ({
@@ -77,5 +80,5 @@ const setupRepository = async ({
 };
 
 main().catch(err => {
-    core.error(err);
+    core.setFailed(err);
 });
