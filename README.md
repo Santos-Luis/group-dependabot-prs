@@ -4,6 +4,10 @@ Intended to group all the opened dependabot PRs into a single one, making the te
 Simplified version of a combination between [combine-prs-workflow](https://github.com/hrvey/combine-prs-workflow) and [combine-dependabot-prs](https://github.com/mAAdhaTTah/combine-dependabot-prs)
 
 ## Inputs
+- baseBranch:
+  - description: 'Branch to PR into'
+  - required: true
+  - default: 'master'
 - combineBranchName:
   - description: 'Name of the branch to combine PRs into'
   - required: true
@@ -12,10 +16,6 @@ Simplified version of a combination between [combine-prs-workflow](https://githu
   - description: 'Title of the pull request to combine PRs into'
   - required: true
   - default: 'combined-denpendabot-prs'
-- baseBranch:
-  - description: 'Branch to PR into'
-  - required: true
-  - default: 'master'
 
 
 ## Example usage
