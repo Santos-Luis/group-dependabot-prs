@@ -8,7 +8,7 @@ const main = async () => {
     });
 
     const now = new Date();
-    const ISOdate = `${now.getFullYear()}-${now.getUTCMonth()}-${now.getDate()}`;
+    const ISOdate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const combineBranchName = `${combineBranchNameInput}-${ISOdate}`;
 
     const githubToken = core.getInput('githubToken', { required: true });
@@ -52,7 +52,7 @@ const main = async () => {
 
     const body = `This PR was created by the Combine PRs action by combining the following PRs:\n${prs.join('\n')}`;
 
-    const { id } = await github.rest.pulls.create({
+    const response = await github.rest.pulls.create({
         owner: context.repo.owner,
         repo: context.repo.repo,
         title,
@@ -61,7 +61,7 @@ const main = async () => {
         body,
     });
 
-    core.info(`PR #${id} created with success`);
+    core.info(`PR created with success: ${response.data.html_url}`);
 };
 
 const setupRepository = async ({
