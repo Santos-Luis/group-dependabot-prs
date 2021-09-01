@@ -20,4 +20,4 @@ inputs:
 runs:
   using: 'node12'
   pre: 'action/pre.js'
-  main: 'action/index.js'
+  main: 'action/main.js'
